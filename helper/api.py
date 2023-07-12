@@ -12,7 +12,7 @@ def get_soup(url):
     soup = BeautifulSoup(html_content, 'html.parser')
     return soup
 
-def trending(n):
+def featured(n):
     url = 'https://yts.mx/browse-movies/0/all/all/0/featured/0/all' if n == 1 else f'https://yts.mx/browse-movies/0/all/all/0/featured/0/all?page={n}'
     soup = get_soup(url)
     content = soup
@@ -33,7 +33,7 @@ def trending(n):
         result['year'] = year.text.strip()
         data = hid.text.strip().split()
         result['rating'] = data[0]
-        result['genre'] = ' '.join(data[3:-2])
+        result['genre'] = ' '.join(data[3:-2]).strip()
 
         results.append(result)
     return results
