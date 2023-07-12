@@ -16,12 +16,19 @@ def trending():
     url = 'https://yts.mx/browse-movies/0/all/all/0/featured/0/all'
     soup = get_soup(url)
     content = soup.find('div', class_='row')
+    print(content)
 
     titles = content.find_all('div', class_='browse-movie-title')
     images = content.find_all('img', class_='img-responsive')
     years = content.find_all('div', class_='browse-movie-year')
     ratings = content.find_all('h4', class_='rating')
 
+    print(titles)
+    print(images)
+    print(years)
+    print(ratings)
+
+    
     results = []
 
     for title, image, year, rating in zip(titles, images, years, ratings):
