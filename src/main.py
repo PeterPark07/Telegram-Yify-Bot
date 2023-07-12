@@ -34,19 +34,24 @@ def help_command(message):
     response_text += "/trending - View latest movies.\n"
     bot.reply_to(message, response_text)
 
-@bot.message_handler(commands=['trending'])
+@bot.message_handler(func=lambda message: message.text.startswith('/trending'))
 def handle_trending(message):
     if message.message_id in previous_message_ids:
          return
     previous_message_ids.append(message.message_id)
 
-    full_list = trending(1)
-    print(full_list)
+    n = message.text.replace('/trending', '')
+    try:
+        n = int(n)
+    except:
+        n = 1
+        
+    full_list = trending(n)
     for movie in full_list:
         caption = f"{movie['title']} ({movie['year']})\n {movie['rating']} ⭐ \n{movie['url']}"
         image = movie['image']
         bot.send_photo(message.chat.id, image, caption = caption)
-    bot.send_message(message.chat.id, '/trending2')
+    bot.reply_to(message, f'/trending{n+1}')
 
 # Handler for any other message
 @bot.message_handler(func=lambda message: True)
