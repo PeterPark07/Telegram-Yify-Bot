@@ -76,6 +76,8 @@ def handle_search(message):
     n = message.text.replace('/search', '').strip()
 
     full_list = get_movies(n)
+
+    bot.reply_to(message, 'Movies Found :-')
     for movie in full_list:
         caption = f"{movie['title']} ({movie['year']})\n{movie['genre']}\n{movie['rating']}⭐ \n{movie['url']}"
         image = movie['image']
