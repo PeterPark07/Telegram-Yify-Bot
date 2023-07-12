@@ -46,6 +46,7 @@ def handle_trending(message):
         caption = f"{movie['title']} ({movie['year']})\n {movie['rating']} ⭐ \n{movie['url']}"
         image = movie['image']
         bot.send_photo(message.chat.id, image, caption = caption)
+    bot.send_message(message.chat.id, '/trending2')
 
 # Handler for any other message
 @bot.message_handler(func=lambda message: True)
