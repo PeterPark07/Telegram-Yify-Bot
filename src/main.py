@@ -31,7 +31,8 @@ def help_command(message):
     response_text = "Here are the available commands:\n\n"
     response_text += "/start - Start the bot.\n"
     response_text += "/help - Show this help message.\n"
-    response_text += "/featured - View latest movies.\n"
+    response_text += "/featured - View featured movies.\n"
+    response_text += "/trending - View trending movies.\n"
     bot.reply_to(message, response_text)
 
 @bot.message_handler(commands=['trending'])
