@@ -3,7 +3,7 @@ from flask import Flask, request
 import telebot
 import time
 from helper.log import log
-from helper.api import apc, get_comic_images, get_comic_info, search, images_to_pdf
+from helper.api import trending
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('bot_token'), threaded=False)
@@ -31,16 +31,15 @@ def help_command(message):
     response_text = "Here are the available commands:\n\n"
     response_text += "/start - Start the bot.\n"
     response_text += "/help - Show this help message.\n"
-    response_text += "/new - View latest Comics.\n"
-    response_text += "/s query - search for Comics.\n"
+    response_text += "/trending - View latest.\n"
     bot.reply_to(message, response_text)
 
-@bot.message_handler(commands=['new'])
+@bot.message_handler(commands=['trending'])
 def handle_com(message):
     if message.message_id in previous_message_ids:  
          return  
     previous_message_ids.append(message.message_id)
-    full_list = apc()
+    full_list = trending()
     for item in full_list:
         cap = item['title'] + '\n' + item['rating'] + '⭐' + '\n' + item['link'] +  '\n\nLatest Chapter\n' + item['chapter'] + '\n' + item['chapter_url']
         image = item['img']
