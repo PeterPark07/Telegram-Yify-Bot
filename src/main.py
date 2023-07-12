@@ -48,7 +48,7 @@ def handle_trending(message):
         
     full_list = trending(n)
     for movie in full_list:
-        caption = f"{movie['title']} ({movie['year']})\n {movie['rating']} ⭐ \n{movie['url']}"
+        caption = f"{movie['title']} ({movie['year']})\n {movie['genre']}\n {movie['rating']} ⭐ \n{movie['url']}"
         image = movie['image']
         bot.send_photo(message.chat.id, image, caption = caption)
     bot.reply_to(message, f'/trending{n+1}')
