@@ -41,7 +41,7 @@ def trending_command(message):
          return
     previous_message_ids.append(message.message_id)
         
-    full_list = get_movies(0)
+    full_list = get_movies('trending')
     for movie in full_list:
         caption = f"{movie['title']} ({movie['year']})\n{movie['genre']}\n{movie['rating']}⭐ \n{movie['url']}"
         image = movie['image']
@@ -57,9 +57,9 @@ def handle_featured(message):
     try:
         n = int(n)
     except:
-        n = 1
-        
+        n = 'featured'
     full_list = get_movies(n)
+    
     for movie in full_list:
         caption = f"{movie['title']} ({movie['year']})\n{movie['genre']}\n{movie['rating']}⭐ \n{movie['url']}"
         image = movie['image']
