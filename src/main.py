@@ -77,7 +77,8 @@ def handle_search(message):
 
     movies = get_movies(n)
 
-    if len(movies) != 0:
+    number = len(movies)
+    if number != 0:
         response = 'Movies Found :-'
     else:
         response = f'No movies found for {n}'
