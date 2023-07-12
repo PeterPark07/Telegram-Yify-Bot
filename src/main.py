@@ -41,6 +41,7 @@ def handle_trending(message):
     previous_message_ids.append(message.message_id)
 
     full_list = trending()
+    bot.send_message(message.chat.id, 'test')
     for movie in full_list:
         caption = f"{movie['title']} \n {movie['rating']} ⭐\n {movie['year']} \n{movie['url']}"
         bot.send_message(message.chat.id, caption)
