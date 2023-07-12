@@ -3,7 +3,7 @@ from flask import Flask, request
 import telebot
 import time
 from helper.log import log
-from helper.api import trending
+from helper.api import featured
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('bot_token'), threaded=False)
@@ -31,27 +31,27 @@ def help_command(message):
     response_text = "Here are the available commands:\n\n"
     response_text += "/start - Start the bot.\n"
     response_text += "/help - Show this help message.\n"
-    response_text += "/trending - View latest movies.\n"
+    response_text += "/featured - View latest movies.\n"
     bot.reply_to(message, response_text)
 
-@bot.message_handler(func=lambda message: message.text.startswith('/trending'))
-def handle_trending(message):
+@bot.message_handler(func=lambda message: message.text.startswith('/featured'))
+def handle_featured(message):
     if message.message_id in previous_message_ids:
          return
     previous_message_ids.append(message.message_id)
 
-    n = message.text.replace('/trending', '')
+    n = message.text.replace('/featured', '')
     try:
         n = int(n)
     except:
         n = 1
         
-    full_list = trending(n)
+    full_list = featured(n)
     for movie in full_list:
         caption = f"{movie['title']} ({movie['year']})\n {movie['genre']}\n {movie['rating']} ⭐ \n{movie['url']}"
         image = movie['image']
         bot.send_photo(message.chat.id, image, caption = caption)
-    bot.reply_to(message, f'/trending{n+1}')
+    bot.reply_to(message, f'/featured{n+1}')
 
 # Handler for any other message
 @bot.message_handler(func=lambda message: True)
