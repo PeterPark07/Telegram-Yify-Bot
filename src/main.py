@@ -57,7 +57,7 @@ def handle_featured(message):
     try:
         n = int(n)
     except:
-        n = 'featured'
+        n = 1
     full_list = get_movies(n)
     
     for movie in full_list:
