@@ -20,18 +20,20 @@ def trending(n):
     titles = content.find_all('a', class_='browse-movie-title')
     images = content.find_all('img', class_='img-responsive')
     years = content.find_all('div', class_='browse-movie-year')
-    ratings = content.find_all('h4', class_='rating')
+    hidden = content.find_all('figcaption', class_='hidden-xs hidden-sm')
     
     results = []
 
-    for title, image, year, rating in zip(titles, images, years, ratings):
+    for title, image, year, hid in zip(titles, images, years, hidden):
         result = {}
         
         result['title'] = title.text.strip()
         result['url'] = title['href']
         result['image'] = image['src']
         result['year'] = year.text.strip()
-        result['rating'] = rating.text.strip()
+        data = hid.text.strip().split()
+        result['rating'] = data[0]
+        result['genre'] = ' '.join(data[3:-2])
 
         results.append(result)
     return results
