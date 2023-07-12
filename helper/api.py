@@ -17,7 +17,7 @@ def trending():
     soup = get_soup(url)
     content = soup
 
-    titles = content.find_all('div', class_='browse-movie-title')
+    titles = content.find_all('a', class_='browse-movie-title')
     images = content.find_all('img', class_='img-responsive')
     years = content.find_all('div', class_='browse-movie-year')
     ratings = content.find_all('h4', class_='rating')
