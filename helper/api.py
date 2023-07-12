@@ -16,7 +16,6 @@ def trending():
     url = 'https://yts.mx/browse-movies/0/all/all/0/featured/0/all'
     soup = get_soup(url)
     content = soup
-    print(content)
 
     titles = content.find_all('div', class_='browse-movie-title')
     images = content.find_all('img', class_='img-responsive')
