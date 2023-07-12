@@ -42,8 +42,8 @@ def trending_command(message):
          return
     previous_message_ids.append(message.message_id)
         
-    full_list = get_movies('trending')
-    for movie in full_list:
+    movies = get_movies('trending')
+    for movie in movies:
         caption = f"{movie['title']} ({movie['year']})\n{movie['genre']}\n{movie['rating']}⭐ \n{movie['url']}"
         image = movie['image']
         bot.send_photo(message.chat.id, image, caption = caption)
@@ -59,9 +59,9 @@ def handle_featured(message):
         n = int(n)
     except:
         n = 1
-    full_list = get_movies(n)
+    movies = get_movies(n)
     
-    for movie in full_list:
+    for movie in movies:
         caption = f"{movie['title']} ({movie['year']})\n{movie['genre']}\n{movie['rating']}⭐ \n{movie['url']}"
         image = movie['image']
         bot.send_photo(message.chat.id, image, caption = caption)
@@ -75,10 +75,15 @@ def handle_search(message):
 
     n = message.text.replace('/search', '').strip()
 
-    full_list = get_movies(n)
+    movies = get_movies(n)
 
-    bot.reply_to(message, 'Movies Found :-')
-    for movie in full_list:
+    if len(movies) != 0:
+        response = 'Movies Found :-'
+    else:
+        response = f'No movies found for {n}'
+    bot.reply_to(message, response)
+    
+    for movie in movies:
         caption = f"{movie['title']} ({movie['year']})\n{movie['genre']}\n{movie['rating']}⭐ \n{movie['url']}"
         image = movie['image']
         bot.send_photo(message.chat.id, image, caption = caption)
