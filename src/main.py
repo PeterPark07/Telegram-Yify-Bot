@@ -41,10 +41,9 @@ def handle_trending(message):
     previous_message_ids.append(message.message_id)
 
     full_list = trending()
-    bot.send_message(message.chat.id, 'test')
     print(full_list)
     for movie in full_list:
-        caption = f"{movie['title']}  ({movie['year']})\n {movie['rating']} ⭐ \n{movie['url']}"
+        caption = f"{movie['title']} ({movie['year']})\n {movie['rating']} ⭐ \n{movie['url']}"
         image = movie['image']
         bot.send_photo(message.chat.id, image, caption = caption)
 
