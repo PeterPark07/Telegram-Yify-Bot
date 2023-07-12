@@ -18,26 +18,19 @@ def trending():
     content = soup.find('div', class_='row')
 
     titles = content.find_all('div', class_='browse-movie-title')
-    photos = content.find_all('img')
-    ratings = content.find_all('span', class_='score font-meta total_votes')
-    chapters = content.find_all('div', class_='list-chapter')
+    years = soup.find_all('div', class_='browse-movie-year')
+    ratings = soup.find_all('h4', class_='rating')
 
     results = []
 
-    for title, photo, rating, chapter in zip(titles, photos, ratings, chapters):
+    for title, year, rating in zip(titles, years, ratings):
         result = {}
-        a_tag = title.find('a')
-        if a_tag:
-            result['title'] = a_tag.text.strip()
-            result['link'] = a_tag['href']
+        
+        result['title'] = title.text.strip()
+        result['url'] = title['href']
 
-        result['img'] = photo['data-src']
+        result['year'] = year.text.strip()
         result['rating'] = rating.text.strip()
-
-        first_chapter = chapter.find('div', class_='chapter-item')
-        if first_chapter:
-            result['chapter'] = first_chapter.find('span', class_='chapter font-meta').text.strip()
-            result['chapter_url'] = first_chapter.find('a', class_='btn-link')['href']
 
         results.append(result)
     return results
