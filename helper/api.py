@@ -13,7 +13,7 @@ def get_soup(url):
     return soup
 
 def trending(n):
-    url = f'https://yts.mx/browse-movies/0/all/all/0/featured/0/all?page={n}'
+    url = 'https://yts.mx/browse-movies/0/all/all/0/featured/0/all' if n == 1 else f'https://yts.mx/browse-movies/0/all/all/0/featured/0/all?page={n}'
     soup = get_soup(url)
     content = soup
 
@@ -21,12 +21,6 @@ def trending(n):
     images = content.find_all('img', class_='img-responsive')
     years = content.find_all('div', class_='browse-movie-year')
     ratings = content.find_all('h4', class_='rating')
-
-    print(titles)
-    print(images)
-    print(years)
-    print(ratings)
-
     
     results = []
 
