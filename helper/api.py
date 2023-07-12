@@ -37,9 +37,11 @@ def get_movies(n):
         
         result['title'] = title.text.strip()
         result['url'] = title['href']
-        
-        if not image['src'].startswith('http'):
-            result['image'] = 'https://img.yts.mx' + image['src']
+
+        image_url = image['src']
+        if not image_url.startswith('http'):
+            image_url = 'https://img.yts.mx' + image_url
+        result['image'] = image_url
         
         result['year'] = year.text.strip()
         data = hid.text.strip().split()
