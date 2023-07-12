@@ -36,16 +36,17 @@ def help_command(message):
 
 @bot.message_handler(commands=['trending'])
 def handle_com(message):
-    if message.message_id in previous_message_ids:  
-         return  
+    if message.message_id in previous_message_ids:
+         return
     previous_message_ids.append(message.message_id)
-    
+
     full_list = trending()
     for movie in full_list:
-        caption = f'{movie['title']} \n {movie['rating']} ⭐\n {movie['year']} \n{item['url']}'
+        caption = f"{movie['title']} \n {movie['rating']} ⭐\n {movie['year']} \n{movie['url']}"
         bot.send_message(message.chat.id, caption)
-    
+
 # Handler for any other message
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
     bot.reply_to(message, message.text)
+
