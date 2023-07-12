@@ -3,7 +3,7 @@ from flask import Flask, request
 import telebot
 import time
 from helper.log import log
-from helper.api import featured
+from helper.api import get_movies
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('bot_token'), threaded=False)
@@ -34,6 +34,18 @@ def help_command(message):
     response_text += "/featured - View latest movies.\n"
     bot.reply_to(message, response_text)
 
+@bot.message_handler(commands=['trending'])
+def trending_command(message):
+    if message.message_id in previous_message_ids:
+         return
+    previous_message_ids.append(message.message_id)
+        
+    full_list = get_movies(0)
+    for movie in full_list:
+        caption = f"{movie['title']} ({movie['year']})\n{movie['genre']}\n{movie['rating']}⭐ \n{movie['url']}"
+        image = movie['image']
+        bot.send_photo(message.chat.id, image, caption = caption)
+
 @bot.message_handler(func=lambda message: message.text.startswith('/featured'))
 def handle_featured(message):
     if message.message_id in previous_message_ids:
@@ -46,9 +58,9 @@ def handle_featured(message):
     except:
         n = 1
         
-    full_list = featured(n)
+    full_list = get_movies(n)
     for movie in full_list:
-        caption = f"{movie['title']} ({movie['year']})\n {movie['genre']}\n {movie['rating']} ⭐ \n{movie['url']}"
+        caption = f"{movie['title']} ({movie['year']})\n{movie['genre']}\n{movie['rating']}⭐ \n{movie['url']}"
         image = movie['image']
         bot.send_photo(message.chat.id, image, caption = caption)
     bot.reply_to(message, f'/featured{n+1}')
