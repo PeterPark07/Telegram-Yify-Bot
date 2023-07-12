@@ -40,7 +40,7 @@ def handle_trending(message):
          return
     previous_message_ids.append(message.message_id)
 
-    full_list = trending()
+    full_list = trending(1)
     print(full_list)
     for movie in full_list:
         caption = f"{movie['title']} ({movie['year']})\n {movie['rating']} ⭐ \n{movie['url']}"
