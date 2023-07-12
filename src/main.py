@@ -35,7 +35,7 @@ def help_command(message):
     bot.reply_to(message, response_text)
 
 @bot.message_handler(commands=['trending'])
-def handle_com(message):
+def handle_trending(message):
     if message.message_id in previous_message_ids:
          return
     previous_message_ids.append(message.message_id)
