@@ -12,8 +12,8 @@ def get_soup(url):
     soup = BeautifulSoup(html_content, 'html.parser')
     return soup
 
-def trending():
-    url = 'https://yts.mx/browse-movies/0/all/all/0/featured/0/all'
+def trending(n):
+    url = f'https://yts.mx/browse-movies/0/all/all/0/featured/0/all?page={n}'
     soup = get_soup(url)
     content = soup
 
