@@ -13,7 +13,7 @@ def get_soup(url):
     return soup
 
 def get_movies(n):
-    if n == 'featured':
+    if n == 1:
         url = 'https://yts.mx/browse-movies/0/all/all/0/featured/0/all'
     elif n == 'trending':
         url = 'https://yts.mx/trending-movies'
@@ -37,7 +37,10 @@ def get_movies(n):
         
         result['title'] = title.text.strip()
         result['url'] = title['href']
-        result['image'] = image['src']
+        
+        if not image['src'].startswith('http'):
+            result['image'] = 'https://img.yts.mx' + image['src']
+        
         result['year'] = year.text.strip()
         data = hid.text.strip().split()
         result['rating'] = data[0]
