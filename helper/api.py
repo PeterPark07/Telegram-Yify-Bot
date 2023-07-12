@@ -18,17 +18,18 @@ def trending():
     content = soup.find('div', class_='row')
 
     titles = content.find_all('div', class_='browse-movie-title')
-    years = soup.find_all('div', class_='browse-movie-year')
-    ratings = soup.find_all('h4', class_='rating')
+    images = content.find_all('img', class_='img-responsive')
+    years = content.find_all('div', class_='browse-movie-year')
+    ratings = content.find_all('h4', class_='rating')
 
     results = []
 
-    for title, year, rating in zip(titles, years, ratings):
+    for title, image, year, rating in zip(titles, images, years, ratings):
         result = {}
         
         result['title'] = title.text.strip()
         result['url'] = title['href']
-
+        result['image'] = image['src']
         result['year'] = year.text.strip()
         result['rating'] = rating.text.strip()
 
