@@ -31,8 +31,9 @@ def help_command(message):
     response_text = "Here are the available commands:\n\n"
     response_text += "/start - Start the bot.\n"
     response_text += "/help - Show this help message.\n"
-    response_text += "/featured - View featured movies.\n"
-    response_text += "/trending - View trending movies.\n"
+    response_text += "/featured - Get featured movies.\n"
+    response_text += "/trending - Get trending movies.\n"
+    response_text += "/search query - Search for movies.\n"
     bot.reply_to(message, response_text)
 
 @bot.message_handler(commands=['trending'])
@@ -66,6 +67,20 @@ def handle_featured(message):
         bot.send_photo(message.chat.id, image, caption = caption)
     bot.reply_to(message, f'/featured{n+1}')
 
+@bot.message_handler(func=lambda message: message.text.startswith('/search'))
+def handle_search(message):
+    if message.message_id in previous_message_ids:
+         return
+    previous_message_ids.append(message.message_id)
+
+    n = message.text.replace('/search', '').strip()
+
+    full_list = get_movies(n)
+    for movie in full_list:
+        caption = f"{movie['title']} ({movie['year']})\n{movie['genre']}\n{movie['rating']}⭐ \n{movie['url']}"
+        image = movie['image']
+        bot.send_photo(message.chat.id, image, caption = caption)
+        
 # Handler for any other message
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
