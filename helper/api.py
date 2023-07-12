@@ -12,8 +12,14 @@ def get_soup(url):
     soup = BeautifulSoup(html_content, 'html.parser')
     return soup
 
-def featured(n):
-    url = 'https://yts.mx/browse-movies/0/all/all/0/featured/0/all' if n == 1 else f'https://yts.mx/browse-movies/0/all/all/0/featured/0/all?page={n}'
+def get_movies(n):
+    if n == 1:
+        url = 'https://yts.mx/browse-movies/0/all/all/0/featured/0/all'
+    elif n == 0:
+        url = 'https://yts.mx/trending-movies'
+    else :
+        url = 'https://yts.mx/browse-movies/0/all/all/0/featured/0/all?page={n}'
+        
     soup = get_soup(url)
     content = soup
 
@@ -37,3 +43,4 @@ def featured(n):
 
         results.append(result)
     return results
+
