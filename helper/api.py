@@ -55,8 +55,8 @@ def movie(url):
     soup = get_soup(url)
     cover = soup.find('img', class_='img-responsive')['src']
     info = soup.find('div', class_='visible-xs col-xs-20').text.strip()
-    tags = soup.find_all('div', class_='row')[6].text.strip()
-    summary =  soup.find_all('div', class_='col-sm-10 col-md-13 col-lg-12')[1].text
+    tags = soup.find_all('div', class_='row')[6].text.strip().replace('\n', ', ')
+    summary = '\n'.join(soup.find_all('div', class_='col-sm-10 col-md-13 col-lg-12')[1].text.strip().split('\n')[1:-3])
 
     
     torrents = ['Torrents Found : ']
