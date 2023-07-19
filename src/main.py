@@ -97,7 +97,7 @@ def handle_movie(message):
 
     cover, info, tags, torrents, summary, similars = movie(message.text)
 
-    caption = info + '\n\nTags : ' + tags + '\n\nPlot Summary :' + summary
+    caption = info + '\n\nTags \n' + tags + '\n\nPlot Summary\n' + summary
     
     bot.send_photo(message.chat.id, cover, caption = caption)
 
