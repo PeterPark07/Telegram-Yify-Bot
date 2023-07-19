@@ -3,7 +3,7 @@ from flask import Flask, request
 import telebot
 import time
 from helper.log import log
-from helper.api import get_movies
+from helper.api import get_movies, movie
 
 app = Flask(__name__)
 bot = telebot.TeleBot(os.getenv('bot_token'), threaded=False)
@@ -88,7 +88,18 @@ def handle_search(message):
         caption = f"{movie['title']} ({movie['year']})\n{movie['genre']}\n{movie['rating']}⭐ \n{movie['url']}"
         image = movie['image']
         bot.send_photo(message.chat.id, image, caption = caption)
-        
+
+@bot.message_handler(func=lambda message: message.text.startswith('https://yts.mx/movies/'))
+def handle_movie(message):
+    if message.message_id in previous_message_ids:
+         return
+    previous_message_ids.append(message.message_id)
+
+    cover, info, tags, summary = movie(message.text)
+
+    bot.send_photo(message.chat.id, cover, caption = info)
+    bot.reply_to(message, tags + summary)
+
 # Handler for any other message
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
