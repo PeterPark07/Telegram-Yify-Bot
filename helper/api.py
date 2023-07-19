@@ -66,8 +66,8 @@ def movie(url):
     imdb.pop(1)
     imdb[1] = 'IMDB'
     ratings[-1] = '🎬' + ' '.join(imdb)
-    ratings[1] = '🍅' + ratings[0]
-    ratings[2] = '🍿' + ratings[1] 
+    ratings[1] = '🍅' + ratings[1]
+    ratings[2] = '🍿' + ratings[2] 
     ratings = '\n'.join(ratings[1:])
     
     torrents = ['Torrents Found : ']
