@@ -63,8 +63,8 @@ def movie(url):
         ratings.append(rating.text.strip().replace('\n', ' ').replace('·', '-'))
 
     imdb = ratings[-1].split()
-    for i in range(2):
-        imdb.pop(1)
+    imdb.pop(1)
+    imdb[1] = 'IMDB'
     ratings[-1] = ' '.join(imdb)
     ratings = '\n'.join(ratings[1:])
     
