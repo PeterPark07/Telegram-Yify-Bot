@@ -97,12 +97,14 @@ def handle_movie(message):
 
     cover, info, tags, torrents, summary, similars = movie(message.text)
 
-    bot.send_photo(message.chat.id, cover, caption = info)
-    bot.reply_to(message, tags + summary)
+    caption = info + '\n\nTags : ' + tags + '\n\nPlot Summary :' + summary
+    
+    bot.send_photo(message.chat.id, cover, caption = caption)
 
     for torrent in torrents:
         bot.send_message(message.chat.id, torrent)
 
+    bot.send_message(message.chat.id, 'Similar Movies:')
     for movies in similars:
         bot.send_photo(message.chat.id, movies['img'], caption = movies['title'] + '\n' + movies['url'])
     
