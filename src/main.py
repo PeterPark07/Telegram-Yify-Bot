@@ -99,7 +99,9 @@ def handle_movie(message):
 
     bot.send_photo(message.chat.id, cover, caption = info)
     bot.reply_to(message, tags + summary)
-    bot.send_message(message.chat.id, torrents)
+
+    for torrent in torrents:
+        bot.send_message(message.chat.id, torrent)
 
     for movies in similars:
         bot.send_photo(message.chat.id, movies['img'], caption = movies['title'] + '\n' + movies['url'])
