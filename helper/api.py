@@ -66,7 +66,7 @@ def movie(url):
     for i in range(2):
         imdb.pop(1)
     ratings[-1] = ' '.join(imdb)
-    ratings = ratings[1:]
+    ratings = '\n'.join(ratings[1:])
     
     torrents = ['Torrents Found : ']
     for torrent in soup.find_all('div', class_='modal-torrent'):
