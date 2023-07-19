@@ -56,7 +56,24 @@ def movie(url):
     cover = soup.find('img', class_='img-responsive')['src']
     info = soup.find('div', class_='visible-xs col-xs-20').text.strip()
     tags = soup.find_all('div', class_='row')[6].text.strip()
-    summary =  soup.find_all('div', class_='col-sm-10 col-md-13 col-lg-12')[1].text
+    summary =  soup.find_all('div', class_='col-sm-10 col-md-13 col-lg-12')[0].text
+
+    
+    torrents = []
+    for torrent in soup.find_all('div', class_='modal-torrent'):
+        quality = torrent.find('div', class_='modal-quality').span.text
+        size_elements = torrent.find_all('p', class_='quality-size')
+        size = size_elements[1].text
+        quality += ' ' + size_elements[0].text
+    
+        magnet_link = torrent.find('a', class_='magnet-download')['href']
+        torrent = {'quality': quality, 'size': size, 'magnet_link': magnet_link}
+        torrents.append(torrent)
+
+    similars = []
+    for i in soup.find('div', class_='col-md-6 hidden-xs hidden-sm').find_all('a'):
+        img = i.find('img')
+        similars.append({'url': i['href'], 'title': i['title'], 'img': img['src']})
 
 
-    return cover, info, tags, summary
+    return cover, info, tags, torrents, summary, similars
