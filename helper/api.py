@@ -59,7 +59,7 @@ def movie(url):
     summary =  soup.find_all('div', class_='col-sm-10 col-md-13 col-lg-12')[1].text
 
     
-    torrents = 'MAGNET LINKS - \n\n'
+    torrents = ['Torrents Found : ']
     for torrent in soup.find_all('div', class_='modal-torrent'):
         quality = torrent.find('div', class_='modal-quality').span.text
         size_elements = torrent.find_all('p', class_='quality-size')
@@ -67,8 +67,8 @@ def movie(url):
         quality += ' ' + size_elements[0].text
     
         magnet_link = torrent.find('a', class_='magnet-download')['href']
-        torrent = f"{quality}\n{size}\n{magnet_link}\n\n\n"
-        torrents+=torrent
+        torrent = f"{quality}\n{size}\n\n{magnet_link}"
+        torrents.append(torrent)
 
     similars = []
     for i in soup.find('div', class_='col-md-6 hidden-xs hidden-sm').find_all('a'):
