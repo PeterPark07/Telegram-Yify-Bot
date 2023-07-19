@@ -95,10 +95,13 @@ def handle_movie(message):
          return
     previous_message_ids.append(message.message_id)
 
-    cover, info, tags, summary = movie(message.text)
+    cover, info, tags, torrents, summary, similars = movie(message.text)
 
     bot.send_photo(message.chat.id, cover, caption = info)
     bot.reply_to(message, tags + summary)
+    bot.send_message(message.chat.id, torrents)
+    
+    
 
 # Handler for any other message
 @bot.message_handler(func=lambda message: True)
