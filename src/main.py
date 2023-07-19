@@ -95,9 +95,9 @@ def handle_movie(message):
          return
     previous_message_ids.append(message.message_id)
 
-    cover, info, tags, torrents, summary, similars = movie(message.text)
+    cover, info, tags, ratings, torrents, summary, similars = movie(message.text)
 
-    caption = info + '\n\nTags \n' + tags + '\n\nPlot Summary\n' + summary
+    caption = info + '\n\nRatings -\n' + ratings +'\n\nTags \n' + tags + '\n\nPlot Summary\n' + summary
     
     bot.send_photo(message.chat.id, cover, caption = caption)
 
