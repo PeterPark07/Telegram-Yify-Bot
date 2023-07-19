@@ -51,3 +51,12 @@ def get_movies(n):
         results.append(result)
     return results
 
+def movie(url):
+    soup = get_soup(url)
+    cover = soup.find('img', class_='img-responsive')['src']
+    info = soup.find('div', class_='visible-xs col-xs-20').text.strip()
+    tags = soup.find_all('div', class_='row')[6].text.strip()
+    summary =  soup.find_all('div', class_='col-sm-10 col-md-13 col-lg-12')[1].text
+
+
+    return cover, info, tags, summary
